@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>קול תורה — לוגו</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../tokens.css"><link rel="stylesheet" href="../base.css">
+<style>
+  .sheet { max-width: 1000px; margin: 0 auto; padding: 40px 28px 64px; }
+  /* English copy needs its own paragraph direction — RTL context displaces
+     sentence-final punctuation. See README, RTL requirement 3. */
+  [lang="en"] { direction: ltr; text-align: left; }
+  .band { display:flex; flex-wrap:wrap; gap:24px; align-items:center; margin: 0 0 32px; }
+  .box { background: var(--kt-surface); border:1px solid var(--kt-border); border-radius: var(--kt-radius-lg); padding: 24px; display:flex; align-items:center; gap:16px; }
+  .box--green { background: var(--kt-green); border-color: var(--kt-green); }
+  .box--black { background:#111; border-color:#111; }
+  .cap { font-family: var(--kt-font-mono); font-size: 11px; letter-spacing:.1em; color: var(--kt-text-faint); direction: ltr; }
+  h2 { margin: 34px 0 14px; }
+  .dont { display:flex; gap:20px; flex-wrap:wrap; }
+  .dont > div { border:1px solid var(--kt-border); border-radius: var(--kt-radius-md); padding:14px; background:var(--kt-surface); width:200px; font-size:13px; color:var(--kt-text-muted); }
+  code { font-family: var(--kt-font-mono); font-size: 12px; background: var(--kt-gold-soft); padding: 1px 4px; border-radius: 3px; }
+</style></head>
+<body class="kt-ruled">
+<div class="sheet">
+  <h1 style="font-size:30px;">לוגו קול תורה</h1>
+  <p style="max-width:60ch; color:var(--kt-text-muted);">קשת ארון הקודש, ובתוכה שורות הכתב — אחת מהן בזהב: הדקה שמתנגנת. אותו רעיון של הרקע המשורטט באתר.</p>
+
+  <h2 lang="en">Primary lockup</h2>
+  <div class="band">
+    <div class="box"><img src="lockup-he.svg" width="240" height="52" alt="קול תורה"></div>
+    <div class="box"><img src="lockup-en.svg" width="348" height="52" alt="Kol Torah"></div>
+  </div>
+
+  <h2 lang="en">Mark</h2>
+  <div class="band">
+    <div class="box"><img src="mark.svg" width="54" height="72" alt=""><span class="cap">mark.svg</span></div>
+    <div class="box box--green"><img src="mark-reverse.svg" width="54" height="72" alt=""><span class="cap" style="color:#fff;">mark-reverse.svg</span></div>
+    <div class="box"><img src="mark-black.svg" width="54" height="72" alt=""><span class="cap">mark-black.svg — one ink</span></div>
+    <div class="box box--black"><img src="mark-white.svg" width="54" height="72" alt=""><span class="cap" style="color:#fff;">mark-white.svg — one ink</span></div>
+    <div class="box"><img src="favicon.svg" width="32" height="32" alt=""><img src="favicon.svg" width="16" height="16" alt=""><span class="cap">favicon.svg — 32 / 16, square tile</span></div>
+  </div>
+
+  <h2 lang="en">Clear space &amp; minimum size</h2>
+  <p lang="en" style="max-width:64ch; color:var(--kt-text-muted);">Clear space on all sides equals the width of one ruled line inside the mark (about 18% of mark height). Minimum sizes: mark 20px tall on screen, 6mm in print; lockup 120px wide. Below 20px use <code>favicon.svg</code>, which drops to two rules and an outlined arch on a square tile.</p>
+
+  <h2 lang="en">Don't</h2>
+  <div class="dont" lang="en">
+    <div>Don't recolour the arch. Green or one ink only; gold belongs to the third rule.</div>
+    <div>Don't add a second gold element — the mark has exactly one.</div>
+    <div>Don't outline, shadow, or gradient it.</div>
+    <div>Don't stretch, rotate, or reproportion the arch.</div>
+    <div>Don't place the solid mark on a mid-tone photo; use <code>mark-reverse.svg</code> on green.</div>
+    <div>Don't set the wordmark in any face other than Noto Serif Hebrew 700.</div>
+    <div>Don't use <code>mark-mono.svg</code> through an <code>&lt;img&gt;</code> tag — <code>currentColor</code> only resolves when the SVG is inlined. Use <code>mark-black.svg</code> or <code>mark-white.svg</code> there.</div>
+  </div>
+</div>
+</body></html>
