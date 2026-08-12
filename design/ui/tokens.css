@@ -69,6 +69,15 @@
   /* ---- Elevation — one shadow, used sparingly ---- */
   --kt-shadow: 0 24px 60px -30px rgba(45, 60, 45, 0.40);
 
+  /* ---- Status (admin/lab tool) ---- */
+  /* Rubric red — the scribe's red ink. The ONE colour licensed outside green/gold,
+     and only for the `failed` state. Never for warnings, links, or emphasis. */
+  --kt-rubric:        oklch(0.47 0.15 30);    /* #a63c28  glyph + label on failure */
+  --kt-rubric-wash:   oklch(0.955 0.030 35);  /* the only tinted status background */
+  --kt-rubric-border: oklch(0.86 0.050 33);
+  --kt-pip-w: 3px;    /* pipeline pip — same proportions as the player's chapter ticks */
+  --kt-pip-h: 9px;
+
   /* ---- Logo ---- */
   --kt-logo-green: #2f5c47;   /* == --kt-green, hard-coded inside the SVG assets */
   --kt-logo-gold:  #e0b64e;   /* == --kt-gold family, the single gold rule in the mark */

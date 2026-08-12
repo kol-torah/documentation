@@ -203,6 +203,63 @@ h1, h2, h3 { font-family: var(--kt-font-serif); font-weight: 700; color: var(--k
 .kt-row[aria-current="true"] .kt-row-time { color: var(--kt-green); font-weight: 700; }
 .kt-row[aria-current="true"] .kt-row-title { color: var(--kt-green-deeper); }
 
+/* ============ Status indicator ============ */
+/* One shell, two glyph families: pipeline pips answer "how far", job glyphs
+   answer "what happened". Sized for a table cell / list row. Deliberately NOT
+   a chip: hundreds of pills per screen is noise. Only `failed` gets weight —
+   it is the one state a person must find by scanning. */
+.kt-status {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-family: var(--kt-font-sans); font-size: var(--kt-size-small);
+  color: var(--kt-text-muted); white-space: nowrap; line-height: 1;
+}
+.kt-status__glyph { display: inline-flex; align-items: center; flex-shrink: 0; }
+
+/* ---- 1. Pipeline: discovered → downloaded → stored ---- */
+/* Three pips. Passed stages are green, the CURRENT stage is gold, stages not
+   yet reached are the empty track colour — the same "gold = you are here"
+   metaphor as the player playhead and the active chapter row. Position in the
+   sequence is legible without reading the label, and in one colour. */
+.kt-pips { display: inline-flex; gap: 3px; }
+.kt-pip {
+  width: var(--kt-pip-w); height: var(--kt-pip-h); border-radius: 1.5px;
+  background: var(--kt-track);
+}
+.kt-pip.is-done    { background: var(--kt-green); }
+.kt-pip.is-current { background: var(--kt-gold); }
+/* Terminal stage reached: label joins the green ink. */
+.kt-status--stored { color: var(--kt-green); font-weight: 600; }
+
+/* ---- 2. Job run: running / done / failed ---- */
+/* running — a gold arc turning on a green-tinted ring: in-progress, not a result. */
+.kt-status--running .kt-status__glyph::before {
+  content: ""; width: 11px; height: 11px; border-radius: 50%;
+  border: 2px solid var(--kt-track); border-top-color: var(--kt-gold);
+  animation: kt-spin 0.9s linear infinite;
+}
+@keyframes kt-spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) {
+  .kt-status--running .kt-status__glyph::before { animation: none; }
+}
+/* done — a filled green disc. Quiet on purpose: success is the common case. */
+.kt-status--done .kt-status__glyph::before {
+  content: ""; width: 10px; height: 10px; border-radius: 50%;
+  background: var(--kt-green);
+}
+.kt-status--done { color: var(--kt-green); }
+/* failed — encoded FOUR ways so it never depends on colour alone:
+   rubric hue + SQUARE glyph (shape differs from every other state) +
+   the only tinted wash in the set + 600 weight. */
+.kt-status--failed {
+  color: var(--kt-rubric); font-weight: 600;
+  background: var(--kt-rubric-wash); border: 1px solid var(--kt-rubric-border);
+  border-radius: var(--kt-radius-sm); padding: 3px 8px; margin: -3px 0;
+}
+.kt-status--failed .kt-status__glyph::before {
+  content: ""; width: 9px; height: 9px; border-radius: 1px;
+  background: var(--kt-rubric);
+}
+
 /* ============ Buttons ============ */
 .kt-btn {
   font: inherit; font-size: var(--kt-size-meta); font-weight: 500;

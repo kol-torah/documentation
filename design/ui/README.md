@@ -177,6 +177,85 @@ ornament.
 
 ---
 
+## Status indicator (admin / lab tool)
+
+An addendum to the locked system, for the internal tool. Two enumerations, **one component**
+(`.kt-status`) with two glyph families — pipeline pips answer *how far*, job glyphs answer *what
+happened*.
+
+### The colour decision
+
+`failed` **gets one new token**, and it is the only addition to the palette. Rationale: finding
+failures in a list of hundreds of rows is a pre-attentive scanning task, and colour is the only
+channel that operates pre-attentively. The system's rule is "never by colour **alone**" — so
+`failed` is encoded four ways simultaneously (rubric hue + square glyph + tinted wash + 600
+weight) and still reads correctly in greyscale or to a colour-blind user.
+
+The hue is **rubric red — the scribe's red ink**, which belongs to the manuscript palette rather
+than arriving from a generic danger set. It is licensed for **this one state only**: never for
+warnings, destructive buttons, links, or emphasis. Every other state stays inside green and gold.
+
+| Role | Token | Value |
+|---|---|---|
+| Failure glyph + label | `--kt-rubric` | `oklch(0.47 0.15 30)` ≈ `#a63c28` |
+| Failure wash (the only tinted status bg) | `--kt-rubric-wash` | `oklch(0.955 0.030 35)` |
+| Failure border | `--kt-rubric-border` | `oklch(0.86 0.050 33)` |
+| Pipeline pip size | `--kt-pip-w` / `--kt-pip-h` | `3px` / `9px` |
+
+### Why not a chip
+
+`.kt-chip`'s pill is wrong here: at 3–6 states across hundreds of rows, a border and background on
+every row turns a table into stripes. `.kt-status` is a borderless glyph + label, and **only
+`failed` takes chip-like weight** — the asymmetry is the point. Pipeline pips reuse the
+proportions of the player's chapter ticks (3×9px), so the vocabulary is already familiar.
+
+### 1. Lesson pipeline — `discovered → downloaded → stored`
+
+Three pips: passed stages green, the **current** stage gold, unreached stages the empty track
+colour. That is the same "gold = you are here" metaphor as the player playhead and the active
+chapter row, so sequence position is legible without reading the label — and survives one-colour
+printing. On the terminal stage the label joins the green ink at 600.
+
+```html
+<span class="kt-status">
+  <span class="kt-status__glyph"><span class="kt-pips">
+    <i class="kt-pip is-current"></i><i class="kt-pip"></i><i class="kt-pip"></i>
+  </span></span>אותר
+</span>
+
+<span class="kt-status">
+  <span class="kt-status__glyph"><span class="kt-pips">
+    <i class="kt-pip is-done"></i><i class="kt-pip is-current"></i><i class="kt-pip"></i>
+  </span></span>הורד
+</span>
+
+<span class="kt-status kt-status--stored">
+  <span class="kt-status__glyph"><span class="kt-pips">
+    <i class="kt-pip is-done"></i><i class="kt-pip is-done"></i><i class="kt-pip is-current"></i>
+  </span></span>נשמר
+</span>
+```
+
+### 2. Job run — `running / done / failed`
+
+Not ordered, so no pips. Each state differs in **shape** first: a turning ring, a disc, a square.
+
+| State | Glyph | Treatment |
+|---|---|---|
+| running | gold arc on a light ring, rotating (honours `prefers-reduced-motion`) | in-progress, not a result |
+| done | filled green disc | quiet — success is the common case |
+| failed | filled rubric **square** | rubric label + wash + border + 600 weight |
+
+```html
+<span class="kt-status kt-status--running"><span class="kt-status__glyph"></span>רץ</span>
+<span class="kt-status kt-status--done"><span class="kt-status__glyph"></span>הושלם</span>
+<span class="kt-status kt-status--failed"><span class="kt-status__glyph"></span>נכשל</span>
+```
+
+The label text carries the meaning for assistive tech, so no extra ARIA is needed; if a build ever
+renders the glyph without a label, add `aria-label` and keep the label as `.sr-only` rather than
+relying on colour. See `example-page.html` for all six states rendered in a table row context.
+
 ## Hebrew / RTL / bilingual requirements
 
 These are hard requirements, not polish:
